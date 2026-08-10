@@ -39,9 +39,12 @@ Vas a crear **3 servicios** dentro de un mismo proyecto: **PostgreSQL**, **Backe
 
 ### 2.2 Servicio Backend
 1. **+ New** → **GitHub Repo** → `marztone` (o usá el servicio que se creó al importar).
-2. **Settings** del servicio:
-   - **Build → Builder:** `Dockerfile`
-   - **Dockerfile Path:** `backend/Dockerfile`
+2. **Variables** → agregá **esta variable clave** para que Railway use el Dockerfile (si no, usa su
+   detector automático y falla en el monorepo):
+   ```
+   RAILWAY_DOCKERFILE_PATH=backend/Dockerfile
+   ```
+3. **Settings**:
    - **Root Directory:** `/` (raíz)
    - **Healthcheck Path:** `/api/health`
 3. **Variables** (Settings → Variables):
@@ -83,15 +86,13 @@ Vas a crear **3 servicios** dentro de un mismo proyecto: **PostgreSQL**, **Backe
 
 ### 2.3 Servicio Frontend
 1. **+ New** → **GitHub Repo** → `marztone`.
-2. **Settings**:
-   - **Builder:** `Dockerfile`
-   - **Dockerfile Path:** `frontend/Dockerfile`
-   - **Root Directory:** `/`
-3. **Variables** (se inyectan en el build de Vite):
+2. **Variables**:
    ```
+   RAILWAY_DOCKERFILE_PATH=frontend/Dockerfile
    VITE_API_URL=https://<tu-backend>.up.railway.app/api
    VITE_SITE_URL=https://<tu-frontend>.up.railway.app
    ```
+3. **Settings → Root Directory:** `/`
 4. **Generate Domain** para la URL pública.
 5. Volvé al **backend** y poné en `FRONTEND_URL` la URL del frontend (para el CORS). Redeploy del backend.
 
