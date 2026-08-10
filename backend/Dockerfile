@@ -21,4 +21,4 @@ COPY --from=build /app/package.json ./package.json
 WORKDIR /app/backend
 EXPOSE 3000
 # Aplica migraciones y arranca la API
-CMD npx prisma migrate deploy && node dist/main.js
+CMD ["sh", "-c", "npx prisma migrate deploy && node dist/main.js"]
