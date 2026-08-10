@@ -1,0 +1,21 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: marztone-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: marztone
+      POSTGRES_PASSWORD: marztone
+      POSTGRES_DB: marztone
+    ports:
+      - "5433:5432"
+    volumes:
+      - marztone_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U marztone -d marztone"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  marztone_pgdata:

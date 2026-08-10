@@ -1,0 +1,110 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About us",
+    "workshop": "The workshop",
+    "instruments": "Instruments",
+    "artists": "Artists",
+    "services": "Services",
+    "testimonials": "Testimonials",
+    "contact": "Contact"
+  },
+  "hero": {
+    "ctaInstruments": "Discover our instruments",
+    "ctaWhatsapp": "Chat on WhatsApp",
+    "scroll": "Keep exploring"
+  },
+  "common": {
+    "loading": "Loading…",
+    "error": "Something went wrong. Please try again.",
+    "empty": "No content available yet.",
+    "viewMore": "View more",
+    "close": "Close",
+    "handmade": "Handmade instruments",
+    "consult": "Enquire",
+    "backToTop": "Back to top",
+    "all": "All"
+  },
+  "instruments": {
+    "title": "Our instruments",
+    "status": {
+      "AVAILABLE": "Available",
+      "SOLD": "Sold",
+      "MADE_TO_ORDER": "Made to order"
+    },
+    "materials": "Materials",
+    "specifications": "Specifications",
+    "consultWhatsapp": "Enquire on WhatsApp",
+    "watchVideo": "Watch video"
+  },
+  "artists": {
+    "title": "Our artists",
+    "usedInstrument": "Instrument"
+  },
+  "services": {
+    "title": "Services"
+  },
+  "process": {
+    "title": "How to order your instrument",
+    "steps": {
+      "1": "First consultation",
+      "2": "Design & materials",
+      "3": "Quote",
+      "4": "Approval",
+      "5": "Building",
+      "6": "Testing & setup",
+      "7": "Delivery"
+    }
+  },
+  "testimonials": {
+    "title": "Testimonials"
+  },
+  "contact": {
+    "title": "Contact",
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone (optional)",
+      "inquiryType": "Inquiry type",
+      "subject": "Subject",
+      "message": "Message",
+      "consent": "I agree that MarzTone may use my data to reply to this inquiry.",
+      "submit": "Send message",
+      "sending": "Sending…",
+      "success": "Thank you! Your message was sent successfully.",
+      "error": "The message could not be sent. Please try again.",
+      "types": {
+        "general": "General inquiry",
+        "custom": "Custom instrument",
+        "repair": "Repair",
+        "restoration": "Restoration",
+        "setup": "Setup"
+      }
+    },
+    "info": {
+      "email": "Email",
+      "phone": "Phone",
+      "address": "Address",
+      "hours": "Opening hours"
+    }
+  },
+  "footer": {
+    "quickNav": "Navigation",
+    "rights": "All rights reserved."
+  },
+  "validation": {
+    "required": "This field is required",
+    "email": "Enter a valid email",
+    "minMessage": "The message is too short",
+    "consent": "You must accept the consent"
+  },
+  "theme": {
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System",
+    "toggle": "Toggle theme"
+  },
+  "language": {
+    "toggle": "Change language"
+  }
+}

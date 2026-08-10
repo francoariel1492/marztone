@@ -1,0 +1,283 @@
+// MarzTone by Manuel Robles Urquiza — Prisma schema
+// Base de datos: PostgreSQL
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+}
+
+enum InstrumentStatus {
+  AVAILABLE
+  SOLD
+  MADE_TO_ORDER
+}
+
+enum Language {
+  ES
+  EN
+}
+
+model AdminUser {
+  id                  String    @id @default(uuid()) @db.Uuid
+  email               String    @unique
+  passwordHash        String
+  firstName           String
+  lastName            String
+  role                Role      @default(ADMIN)
+  isActive            Boolean   @default(true)
+  refreshTokenHash    String?
+  failedLoginAttempts Int       @default(0)
+  lockedUntil         DateTime?
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+
+  @@index([email])
+  @@map("admin_users")
+}
+
+model SiteSettings {
+  id                 String   @id @default(uuid()) @db.Uuid
+  siteName           String   @default("MarzTone")
+  signature          String   @default("by Manuel Robles Urquiza")
+  sloganEs           String
+  sloganEn           String
+  logoUrl            String?
+  faviconUrl         String?
+  email              String
+  phone              String
+  whatsappNumber     String
+  whatsappMessageEs  String
+  whatsappMessageEn  String
+  instagramUrl       String?
+  youtubeUrl         String?
+  spotifyUrl         String?
+  addressEs          String
+  addressEn          String
+  openingHoursEs     String
+  openingHoursEn     String
+  mapEmbedUrl        String?
+  seoTitleEs         String
+  seoTitleEn         String
+  seoDescriptionEs   String
+  seoDescriptionEn   String
+  ogImageUrl         String?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  @@map("site_settings")
+}
+
+model PageSection {
+  id           String   @id @default(uuid()) @db.Uuid
+  key          String   @unique
+  titleEs      String
+  titleEn      String
+  subtitleEs   String?
+  subtitleEn   String?
+  contentEs    String?
+  contentEn    String?
+  imageUrl     String?
+  isVisible    Boolean  @default(true)
+  displayOrder Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([displayOrder])
+  @@map("page_sections")
+}
+
+model WorkshopImage {
+  id            String   @id @default(uuid()) @db.Uuid
+  titleEs       String?
+  titleEn       String?
+  descriptionEs String?
+  descriptionEn String?
+  imageUrl      String
+  altEs         String
+  altEn         String
+  displayOrder  Int      @default(0)
+  isPublished   Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([displayOrder])
+  @@index([isPublished])
+  @@map("workshop_images")
+}
+
+model InstrumentCategory {
+  id           String       @id @default(uuid()) @db.Uuid
+  slug         String       @unique
+  nameEs       String
+  nameEn       String
+  displayOrder Int          @default(0)
+  isActive     Boolean      @default(true)
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  instruments  Instrument[]
+
+  @@index([displayOrder])
+  @@map("instrument_categories")
+}
+
+model Instrument {
+  id                String             @id @default(uuid()) @db.Uuid
+  slug              String             @unique
+  nameEs            String
+  nameEn            String
+  descriptionEs     String
+  descriptionEn     String
+  materialsEs       String?
+  materialsEn       String?
+  specificationsEs  String?
+  specificationsEn  String?
+  status            InstrumentStatus   @default(AVAILABLE)
+  price             Decimal?           @db.Decimal(10, 2)
+  currency          String?
+  mainImageUrl      String
+  youtubeUrl        String?
+  whatsappMessageEs String?
+  whatsappMessageEn String?
+  categoryId        String             @db.Uuid
+  category          InstrumentCategory @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  images            InstrumentImage[]
+  isFeatured        Boolean            @default(false)
+  isPublished       Boolean            @default(true)
+  displayOrder      Int                @default(0)
+  deletedAt         DateTime?
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+
+  @@index([categoryId])
+  @@index([status])
+  @@index([isPublished])
+  @@index([displayOrder])
+  @@index([deletedAt])
+  @@map("instruments")
+}
+
+model InstrumentImage {
+  id           String     @id @default(uuid()) @db.Uuid
+  instrumentId String     @db.Uuid
+  instrument   Instrument @relation(fields: [instrumentId], references: [id], onDelete: Cascade)
+  imageUrl     String
+  altEs        String
+  altEn        String
+  displayOrder Int        @default(0)
+  createdAt    DateTime   @default(now())
+
+  @@index([instrumentId])
+  @@index([displayOrder])
+  @@map("instrument_images")
+}
+
+model Artist {
+  id                String    @id @default(uuid()) @db.Uuid
+  slug              String    @unique
+  name              String
+  stageName         String?
+  biographyEs       String
+  biographyEn       String
+  instrumentUsedEs  String?
+  instrumentUsedEn  String?
+  imageUrl          String
+  instagramUrl      String?
+  youtubeUrl        String?
+  spotifyUrl        String?
+  websiteUrl        String?
+  isFeatured        Boolean   @default(false)
+  isPublished       Boolean   @default(true)
+  displayOrder      Int       @default(0)
+  deletedAt         DateTime?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  @@index([isPublished])
+  @@index([displayOrder])
+  @@index([deletedAt])
+  @@map("artists")
+}
+
+model Service {
+  id                String   @id @default(uuid()) @db.Uuid
+  slug              String   @unique
+  titleEs           String
+  titleEn           String
+  descriptionEs     String
+  descriptionEn     String
+  icon              String?
+  imageUrl          String?
+  whatsappMessageEs String?
+  whatsappMessageEn String?
+  isActive          Boolean  @default(true)
+  displayOrder      Int      @default(0)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@index([isActive])
+  @@index([displayOrder])
+  @@map("services")
+}
+
+model Testimonial {
+  id               String   @id @default(uuid()) @db.Uuid
+  customerName     String
+  customerImageUrl String?
+  relatedWorkEs    String?
+  relatedWorkEn    String?
+  commentEs        String
+  commentEn        String
+  artistUrl        String?
+  isPublished      Boolean  @default(true)
+  displayOrder     Int      @default(0)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@index([isPublished])
+  @@index([displayOrder])
+  @@map("testimonials")
+}
+
+model ContactMessage {
+  id          String   @id @default(uuid()) @db.Uuid
+  name        String
+  email       String
+  phone       String?
+  inquiryType String
+  subject     String
+  message     String
+  language    Language @default(ES)
+  isRead      Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([isRead])
+  @@index([createdAt])
+  @@map("contact_messages")
+}
+
+model MediaFile {
+  id           String   @id @default(uuid()) @db.Uuid
+  url          String
+  storageKey   String   @unique
+  originalName String
+  mimeType     String
+  size         Int
+  width        Int?
+  height       Int?
+  altEs        String?
+  altEn        String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([createdAt])
+  @@map("media_files")
+}

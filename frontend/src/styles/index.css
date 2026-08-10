@@ -1,0 +1,68 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+  html.dark {
+    color-scheme: dark;
+  }
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+  body {
+    @apply bg-cream-100 text-wood-900 font-body antialiased;
+    @apply dark:bg-charcoal-950 dark:text-cream-100;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display;
+  }
+  /* Focus visible accesible */
+  :focus-visible {
+    @apply outline-none ring-2 ring-copper-500 ring-offset-2 ring-offset-cream-100 dark:ring-offset-charcoal-950;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-all duration-300 focus-visible:ring-2;
+  }
+  .btn-primary {
+    @apply btn bg-wood-800 text-cream-100 hover:bg-wood-700 shadow-warm dark:bg-copper-500 dark:text-charcoal-950 dark:hover:bg-copper-400;
+  }
+  .btn-outline {
+    @apply btn border border-wood-500/40 text-wood-800 hover:bg-wood-500/10 dark:border-copper-400/40 dark:text-cream-100 dark:hover:bg-copper-400/10;
+  }
+  .btn-whatsapp {
+    @apply btn bg-[#25D366] text-white hover:bg-[#20bd5a] shadow-soft;
+  }
+  .card {
+    @apply rounded-2xl border border-wood-500/15 bg-cream-50 shadow-soft transition-all duration-300 dark:border-copper-400/15 dark:bg-charcoal-900;
+  }
+  .input {
+    @apply w-full rounded-xl border border-wood-500/25 bg-cream-50 px-4 py-2.5 text-wood-900 placeholder:text-wood-500/50 transition-colors focus:border-copper-500 dark:border-copper-400/25 dark:bg-charcoal-800 dark:text-cream-100;
+  }
+  .label {
+    @apply mb-1.5 block text-sm font-medium text-wood-700 dark:text-cream-200;
+  }
+  .section-pad {
+    @apply mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8;
+  }
+}

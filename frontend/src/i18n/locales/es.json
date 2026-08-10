@@ -1,0 +1,110 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "about": "Quiénes somos",
+    "workshop": "El taller",
+    "instruments": "Instrumentos",
+    "artists": "Artistas",
+    "services": "Servicios",
+    "testimonials": "Testimonios",
+    "contact": "Contacto"
+  },
+  "hero": {
+    "ctaInstruments": "Conocé nuestros instrumentos",
+    "ctaWhatsapp": "Hablemos por WhatsApp",
+    "scroll": "Seguí explorando"
+  },
+  "common": {
+    "loading": "Cargando…",
+    "error": "Ocurrió un error. Intentá de nuevo.",
+    "empty": "No hay contenido disponible por ahora.",
+    "viewMore": "Ver más",
+    "close": "Cerrar",
+    "handmade": "Instrumentos hechos a mano",
+    "consult": "Consultar",
+    "backToTop": "Volver arriba",
+    "all": "Todos"
+  },
+  "instruments": {
+    "title": "Nuestros instrumentos",
+    "status": {
+      "AVAILABLE": "Disponible",
+      "SOLD": "Vendido",
+      "MADE_TO_ORDER": "Por encargo"
+    },
+    "materials": "Materiales",
+    "specifications": "Especificaciones",
+    "consultWhatsapp": "Consultar por WhatsApp",
+    "watchVideo": "Ver video"
+  },
+  "artists": {
+    "title": "Nuestros artistas",
+    "usedInstrument": "Instrumento"
+  },
+  "services": {
+    "title": "Servicios"
+  },
+  "process": {
+    "title": "Cómo encargar tu instrumento",
+    "steps": {
+      "1": "Primera consulta",
+      "2": "Diseño y materiales",
+      "3": "Presupuesto",
+      "4": "Aprobación",
+      "5": "Construcción",
+      "6": "Pruebas y ajustes",
+      "7": "Entrega"
+    }
+  },
+  "testimonials": {
+    "title": "Testimonios"
+  },
+  "contact": {
+    "title": "Contacto",
+    "form": {
+      "name": "Nombre",
+      "email": "Email",
+      "phone": "Teléfono (opcional)",
+      "inquiryType": "Tipo de consulta",
+      "subject": "Asunto",
+      "message": "Mensaje",
+      "consent": "Acepto que MarzTone use mis datos para responder a esta consulta.",
+      "submit": "Enviar mensaje",
+      "sending": "Enviando…",
+      "success": "¡Gracias! Tu mensaje fue enviado correctamente.",
+      "error": "No se pudo enviar el mensaje. Intentá de nuevo.",
+      "types": {
+        "general": "Consulta general",
+        "custom": "Instrumento personalizado",
+        "repair": "Reparación",
+        "restoration": "Restauración",
+        "setup": "Calibración"
+      }
+    },
+    "info": {
+      "email": "Email",
+      "phone": "Teléfono",
+      "address": "Dirección",
+      "hours": "Horarios"
+    }
+  },
+  "footer": {
+    "quickNav": "Navegación",
+    "rights": "Todos los derechos reservados."
+  },
+  "validation": {
+    "required": "Este campo es obligatorio",
+    "email": "Ingresá un email válido",
+    "minMessage": "El mensaje es demasiado corto",
+    "consent": "Debés aceptar el consentimiento"
+  },
+  "theme": {
+    "light": "Claro",
+    "dark": "Oscuro",
+    "system": "Sistema",
+    "toggle": "Cambiar tema"
+  },
+  "language": {
+    "toggle": "Cambiar idioma"
+  }
+}

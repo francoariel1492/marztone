@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="MarzTone by Manuel Robles Urquiza — Luthería artesanal. Instrumentos con identidad propia." />
+    <meta property="og:title" content="MarzTone | Luthería artesanal by Manuel Robles Urquiza" />
+    <meta property="og:type" content="website" />
+    <title>MarzTone | by Manuel Robles Urquiza</title>
+    <!-- Evita el flash de tema incorrecto -->
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem('marztone-theme');
+          var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          var isDark = stored === 'dark' || (stored !== 'light' && (stored === 'system' || stored === null) && prefersDark);
+          if (isDark) document.documentElement.classList.add('dark');
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
