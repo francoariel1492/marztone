@@ -47,8 +47,8 @@ async function bootstrap(): Promise<void> {
   SwaggerModule.setup('api/docs', app, document);
 
   const port = config.get<number>('port') ?? 3000;
-  await app.listen(port);
-  Logger.log(`🎸 MarzTone API en http://localhost:${port}/api (docs: /api/docs)`, 'Bootstrap');
+  await app.listen(port, '0.0.0.0');
+  Logger.log(`🎸 MarzTone API escuchando en 0.0.0.0:${port}/api (docs: /api/docs)`, 'Bootstrap');
 }
 
 bootstrap();
