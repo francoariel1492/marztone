@@ -19,7 +19,22 @@ async function bootstrap(): Promise<void> {
   const allowedOrigins = frontendUrl.split(',').map((o) => o.trim());
 
   app.setGlobalPrefix('api');
-  app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
+  app.use(
+    helmet({
+      crossOriginResourcePolicy: { policy: 'cross-origin' },
+      contentSecurityPolicy: {
+        directives: {
+          ...helmet.contentSecurityPolicy.getDefaultDirectives(),
+          'img-src': ["'self'", 'data:', 'blob:', 'https:'],
+          'media-src': ["'self'", 'data:', 'https:'],
+          'connect-src': ["'self'", 'https:'],
+          'frame-src': ["'self'", 'https://www.youtube.com', 'https://www.youtube-nocookie.com'],
+          'font-src': ["'self'", 'https:', 'data:'],
+          'style-src': ["'self'", 'https:', "'unsafe-inline'"],
+        },
+      },
+    }),
+  );
   app.use(cookieParser());
   app.enableCors({ origin: allowedOrigins, credentials: true });
 
