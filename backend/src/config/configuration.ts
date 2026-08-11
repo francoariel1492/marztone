@@ -61,7 +61,12 @@ export default (): AppConfig => ({
     provider: (process.env.STORAGE_PROVIDER as 'local' | 'cloudinary') ?? 'local',
     maxFileSizeMb: parseInt(process.env.MAX_FILE_SIZE_MB ?? '5', 10),
     localDir: process.env.STORAGE_LOCAL_DIR ?? 'uploads',
-    publicUrl: process.env.STORAGE_PUBLIC_URL ?? 'http://localhost:3000/uploads',
+    // En Railway usa el dominio público automáticamente; en local, localhost.
+    publicUrl:
+      process.env.STORAGE_PUBLIC_URL ??
+      (process.env.RAILWAY_PUBLIC_DOMAIN
+        ? `https://${process.env.RAILWAY_PUBLIC_DOMAIN}/uploads`
+        : 'http://localhost:3000/uploads'),
     cloudinary: {
       cloudName: process.env.CLOUDINARY_CLOUD_NAME ?? '',
       apiKey: process.env.CLOUDINARY_API_KEY ?? '',
