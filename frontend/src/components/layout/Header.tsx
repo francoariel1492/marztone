@@ -44,9 +44,7 @@ export function Header({ settings, activeSection }: HeaderProps) {
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? 'bg-cream-100/95 backdrop-blur-md shadow-soft dark:bg-charcoal-950/95'
-          : 'bg-transparent'
+        scrolled ? 'bg-wood-900/95 backdrop-blur-md shadow-soft' : 'bg-transparent'
       }`}
     >
       {/* Degradado sutil arriba para que el texto claro se lea sobre la foto del hero */}
@@ -58,7 +56,7 @@ export function Header({ settings, activeSection }: HeaderProps) {
       )}
       <nav className="relative mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <button onClick={() => handleNav('hero')} aria-label="MarzTone — Inicio">
-          <Wordmark logoUrl={settings?.logoUrl} size="md" onDark={!scrolled} />
+          <Wordmark logoUrl={settings?.logoUrl} size="lg" onDark hideSignature />
         </button>
 
         <ul className="hidden items-center gap-1 lg:flex">
@@ -69,12 +67,8 @@ export function Header({ settings, activeSection }: HeaderProps) {
                 aria-current={activeSection === item.id ? 'true' : undefined}
                 className={`rounded-full px-3 py-2 text-sm font-medium transition-colors ${
                   activeSection === item.id
-                    ? scrolled
-                      ? 'text-copper-500'
-                      : 'text-copper-300'
-                    : scrolled
-                      ? 'text-wood-700 hover:text-wood-900 dark:text-cream-200 dark:hover:text-cream-50'
-                      : 'text-cream-100/90 hover:text-white'
+                    ? 'text-copper-300'
+                    : 'text-cream-100/90 hover:text-white'
                 }`}
               >
                 {t(item.labelKey)}
@@ -84,8 +78,8 @@ export function Header({ settings, activeSection }: HeaderProps) {
         </ul>
 
         <div className="hidden items-center gap-3 lg:flex">
-          <LanguageSelector onDark={!scrolled} />
-          <ThemeSelector onDark={!scrolled} />
+          <LanguageSelector onDark />
+          <ThemeSelector onDark />
           <WhatsAppButton url={waUrl} label="WhatsApp" />
         </div>
 
@@ -95,9 +89,7 @@ export function Header({ settings, activeSection }: HeaderProps) {
           aria-expanded={open}
           aria-controls="mobile-menu"
           aria-label={open ? t('common.close') : 'Menú'}
-          className={`rounded-lg p-2 lg:hidden ${
-            scrolled || open ? 'text-wood-800 dark:text-cream-100' : 'text-cream-50'
-          }`}
+          className="rounded-lg p-2 text-cream-50 lg:hidden"
         >
           {open ? <X size={26} /> : <Menu size={26} />}
         </button>
@@ -106,7 +98,7 @@ export function Header({ settings, activeSection }: HeaderProps) {
       {open && (
         <div
           id="mobile-menu"
-          className="border-t border-wood-500/15 bg-cream-100 px-4 pb-6 pt-2 dark:border-copper-400/15 dark:bg-charcoal-950 lg:hidden"
+          className="relative border-t border-cream-100/10 bg-wood-900 px-4 pb-6 pt-2 lg:hidden"
         >
           <ul className="flex flex-col gap-1">
             {NAV_ITEMS.map((item) => (
@@ -115,8 +107,8 @@ export function Header({ settings, activeSection }: HeaderProps) {
                   onClick={() => handleNav(item.id)}
                   className={`w-full rounded-lg px-3 py-3 text-left text-base font-medium transition-colors ${
                     activeSection === item.id
-                      ? 'bg-wood-500/10 text-copper-500'
-                      : 'text-wood-800 dark:text-cream-100'
+                      ? 'bg-white/10 text-copper-300'
+                      : 'text-cream-100/90'
                   }`}
                 >
                   {t(item.labelKey)}
@@ -125,8 +117,8 @@ export function Header({ settings, activeSection }: HeaderProps) {
             ))}
           </ul>
           <div className="mt-4 flex flex-wrap items-center gap-3">
-            <LanguageSelector />
-            <ThemeSelector />
+            <LanguageSelector onDark />
+            <ThemeSelector onDark />
           </div>
           <div className="mt-4">
             <WhatsAppButton url={waUrl} label="WhatsApp" />

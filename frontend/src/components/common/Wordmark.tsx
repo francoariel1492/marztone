@@ -5,19 +5,26 @@ interface WordmarkProps {
   size?: 'sm' | 'md' | 'lg';
   className?: string;
   onDark?: boolean;
+  hideSignature?: boolean;
 }
 
 const sizeMap = {
-  sm: { img: 'h-8', sign: 'text-[10px]' },
-  md: { img: 'h-12', sign: 'text-[11px]' },
-  lg: { img: 'h-20', sign: 'text-base sm:text-lg' },
+  sm: { img: 'h-10', sign: 'text-[10px]' },
+  md: { img: 'h-[3.75rem]', sign: 'text-[11px]' },
+  lg: { img: 'h-[3.75rem]', sign: 'text-base sm:text-lg' },
 };
 
 /**
  * Logo de MarzTone: versión dorada sobre fondos oscuros (dark mode / hero) y negra
  * sobre fondos claros. La firma "by Manuel Robles Urquiza" acompaña como subtítulo.
  */
-export function Wordmark({ logoUrl, size = 'md', className = '', onDark = false }: WordmarkProps) {
+export function Wordmark({
+  logoUrl,
+  size = 'md',
+  className = '',
+  onDark = false,
+  hideSignature = false,
+}: WordmarkProps) {
   const { isDark } = useTheme();
   const s = sizeMap[size];
   const onDarkBg = onDark || isDark;
@@ -37,9 +44,11 @@ export function Wordmark({ logoUrl, size = 'md', className = '', onDark = false 
         className={`${s.img} w-auto`}
         loading="eager"
       />
-      <span className={`mt-1 font-display italic tracking-wide ${signColor} ${s.sign}`}>
-        by Manuel Robles Urquiza
-      </span>
+      {!hideSignature && (
+        <span className={`mt-1 font-display italic tracking-wide ${signColor} ${s.sign}`}>
+          by Manuel Robles Urquiza
+        </span>
+      )}
     </span>
   );
 }

@@ -42,7 +42,7 @@ export function HeroSection({ section, settings }: HeroSectionProps) {
           <img
             src="/logo-dark.png"
             alt="MarzTone"
-            className="h-24 w-auto sm:h-40"
+            className="h-[7.5rem] w-auto sm:h-[12.5rem]"
             loading="eager"
           />
           <p className="mt-3 font-display text-lg italic text-copper-300 sm:text-xl">
