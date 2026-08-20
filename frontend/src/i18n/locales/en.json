@@ -3,7 +3,7 @@
     "home": "Home",
     "about": "About us",
     "workshop": "The workshop",
-    "instruments": "Instruments",
+    "instruments": "Models",
     "artists": "Artists",
     "services": "Services",
     "testimonials": "Testimonials",
@@ -26,7 +26,7 @@
     "all": "All"
   },
   "instruments": {
-    "title": "Our instruments",
+    "title": "Models",
     "status": {
       "AVAILABLE": "Available",
       "SOLD": "Sold",

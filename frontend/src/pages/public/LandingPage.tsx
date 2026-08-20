@@ -11,12 +11,9 @@ import { Footer } from '@/components/layout/Footer';
 import { WhatsAppButton } from '@/components/common/WhatsAppButton';
 import { BackToTopButton } from '@/components/common/BackToTopButton';
 import { HeroSection } from '@/sections/HeroSection';
-import { AboutSection } from '@/sections/AboutSection';
 import { WorkshopSection } from '@/sections/WorkshopSection';
 import { InstrumentsSection } from '@/sections/InstrumentsSection';
 import { ArtistsSection } from '@/sections/ArtistsSection';
-import { ServicesSection } from '@/sections/ServicesSection';
-import { TestimonialsSection } from '@/sections/TestimonialsSection';
 import { ContactSection } from '@/sections/ContactSection';
 
 export function LandingPage() {
@@ -39,12 +36,9 @@ export function LandingPage() {
       <Header settings={settings} activeSection={activeSection} />
       <main>
         <HeroSection section={findSection(sections, 'hero')} settings={settings} />
-        <AboutSection section={findSection(sections, 'about')} />
         <WorkshopSection section={findSection(sections, 'workshop')} />
         <InstrumentsSection settings={settings} />
         <ArtistsSection />
-        <ServicesSection settings={settings} />
-        <TestimonialsSection />
         <ContactSection section={findSection(sections, 'contact')} settings={settings} />
       </main>
       <Footer settings={settings} />

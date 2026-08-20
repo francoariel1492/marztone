@@ -3,7 +3,7 @@
     "home": "Inicio",
     "about": "Quiénes somos",
     "workshop": "El taller",
-    "instruments": "Instrumentos",
+    "instruments": "Modelos",
     "artists": "Artistas",
     "services": "Servicios",
     "testimonials": "Testimonios",
@@ -26,7 +26,7 @@
     "all": "Todos"
   },
   "instruments": {
-    "title": "Nuestros instrumentos",
+    "title": "Modelos",
     "status": {
       "AVAILABLE": "Disponible",
       "SOLD": "Vendido",
