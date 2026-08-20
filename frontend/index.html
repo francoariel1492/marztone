@@ -14,7 +14,8 @@
         try {
           var stored = localStorage.getItem('marztone-theme');
           var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-          var isDark = stored === 'dark' || (stored !== 'light' && (stored === 'system' || stored === null) && prefersDark);
+          // Por defecto: light. Solo oscuro si está guardado 'dark' o 'system' + preferencia oscura.
+          var isDark = stored === 'dark' || (stored === 'system' && prefersDark);
           if (isDark) document.documentElement.classList.add('dark');
         } catch (e) {}
       })();

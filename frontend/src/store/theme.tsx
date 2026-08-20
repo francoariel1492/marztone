@@ -27,7 +27,7 @@ function resolveIsDark(mode: ThemeMode): boolean {
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const [mode, setModeState] = useState<ThemeMode>(
-    () => (localStorage.getItem(STORAGE_KEY) as ThemeMode | null) ?? 'system',
+    () => (localStorage.getItem(STORAGE_KEY) as ThemeMode | null) ?? 'light',
   );
   const [isDark, setIsDark] = useState<boolean>(() => resolveIsDark(mode));
 

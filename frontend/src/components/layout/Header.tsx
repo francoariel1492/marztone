@@ -45,8 +45,8 @@ export function Header({ settings, activeSection }: HeaderProps) {
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
         scrolled
-          ? 'bg-cream-100/90 backdrop-blur-md shadow-soft dark:bg-charcoal-950/90'
-          : 'bg-transparent'
+          ? 'bg-cream-100/95 backdrop-blur-md shadow-soft dark:bg-charcoal-950/95'
+          : 'bg-cream-100/80 backdrop-blur-sm dark:bg-charcoal-950/80'
       }`}
     >
       <nav className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
