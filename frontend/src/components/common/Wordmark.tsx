@@ -28,7 +28,7 @@ export function Wordmark({
   const { isDark } = useTheme();
   const s = sizeMap[size];
   const onDarkBg = onDark || isDark;
-  const signColor = onDarkBg ? 'text-cream-100/75' : 'text-wood-500';
+  const signColor = onDarkBg ? 'text-cream-100/80' : 'text-wood-700';
 
   // Logo cargado desde el panel (override) tiene prioridad.
   if (logoUrl) {

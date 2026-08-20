@@ -4,10 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Wordmark } from '@/components/common/Wordmark';
 import { LanguageSelector } from '@/components/common/LanguageSelector';
 import { ThemeSelector } from '@/components/common/ThemeSelector';
-import { WhatsAppButton } from '@/components/common/WhatsAppButton';
 import { NAV_ITEMS, scrollToSection } from './navigation';
-import { useLocalizedContent } from '@/hooks/useLocalizedContent';
-import { whatsappFromSettings } from '@/utils/whatsapp';
 import type { SiteSettings } from '@/types';
 
 interface HeaderProps {
@@ -17,7 +14,6 @@ interface HeaderProps {
 
 export function Header({ settings, activeSection }: HeaderProps) {
   const { t } = useTranslation();
-  const { isEn } = useLocalizedContent();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -38,8 +34,6 @@ export function Header({ settings, activeSection }: HeaderProps) {
     setOpen(false);
     scrollToSection(id);
   };
-
-  const waUrl = settings ? whatsappFromSettings(settings, isEn) : '#';
 
   return (
     <header
@@ -84,7 +78,6 @@ export function Header({ settings, activeSection }: HeaderProps) {
         <div className="hidden items-center gap-3 lg:flex">
           <LanguageSelector onDark={!scrolled} />
           <ThemeSelector onDark={!scrolled} />
-          <WhatsAppButton url={waUrl} label="WhatsApp" />
         </div>
 
         <button
@@ -125,9 +118,6 @@ export function Header({ settings, activeSection }: HeaderProps) {
           <div className="mt-4 flex flex-wrap items-center gap-3">
             <LanguageSelector />
             <ThemeSelector />
-          </div>
-          <div className="mt-4">
-            <WhatsAppButton url={waUrl} label="WhatsApp" />
           </div>
         </div>
       )}

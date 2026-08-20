@@ -3,8 +3,6 @@ import { ChevronDown } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import type { PageSection, SiteSettings } from '@/types';
 import { useLocalizedContent } from '@/hooks/useLocalizedContent';
-import { whatsappFromSettings } from '@/utils/whatsapp';
-import { WhatsAppButton } from '@/components/common/WhatsAppButton';
 import { scrollToSection } from '@/components/layout/navigation';
 
 interface HeroSectionProps {
@@ -12,14 +10,13 @@ interface HeroSectionProps {
   settings?: SiteSettings;
 }
 
-export function HeroSection({ section, settings }: HeroSectionProps) {
+export function HeroSection({ section }: HeroSectionProps) {
   const { t } = useTranslation();
-  const { pick, isEn } = useLocalizedContent();
+  const { pick } = useLocalizedContent();
 
   const slogan = section ? (pick(section, 'subtitle') as string) : '';
   const description = section ? (pick(section, 'content') as string) : '';
   const image = section?.imageUrl ?? undefined;
-  const waUrl = settings ? whatsappFromSettings(settings, isEn) : '#';
 
   return (
     <section id="hero" className="relative flex min-h-screen items-center overflow-hidden">
@@ -58,7 +55,6 @@ export function HeroSection({ section, settings }: HeroSectionProps) {
             >
               {t('hero.ctaInstruments')}
             </button>
-            <WhatsAppButton url={waUrl} label={t('hero.ctaWhatsapp')} />
           </div>
         </motion.div>
       </div>
