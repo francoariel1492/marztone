@@ -81,6 +81,8 @@ model SiteSettings {
 model PageSection {
   id           String   @id @default(uuid()) @db.Uuid
   key          String   @unique
+  label        String   @default("")
+  layout       String   @default("imagen-derecha")
   titleEs      String
   titleEn      String
   subtitleEs   String?

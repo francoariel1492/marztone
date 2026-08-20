@@ -119,6 +119,8 @@ async function main() {
   const sections = [
     {
       key: 'hero',
+      label: 'Portada',
+      layout: 'imagen-fondo',
       titleEs: 'MarzTone',
       titleEn: 'MarzTone',
       subtitleEs: 'Instrumentos con identidad propia',
@@ -132,6 +134,8 @@ async function main() {
     },
     {
       key: 'about',
+      label: 'Sobre nosotros',
+      layout: 'imagen-derecha',
       titleEs: 'Quiénes somos',
       titleEn: 'About us',
       subtitleEs: 'Manuel Robles Urquiza',
@@ -145,6 +149,8 @@ async function main() {
     },
     {
       key: 'workshop',
+      label: 'El taller',
+      layout: 'texto-centrado',
       titleEs: 'El taller',
       titleEn: 'The workshop',
       subtitleEs: 'Del diseño a la entrega',
@@ -155,14 +161,36 @@ async function main() {
       displayOrder: 2,
     },
     {
+      key: 'instruments',
+      label: 'Instrumentos',
+      layout: 'texto-centrado',
+      titleEs: 'Instrumentos',
+      titleEn: 'Instruments',
+      subtitleEs: 'Nuestro trabajo',
+      subtitleEn: 'Our work',
+      displayOrder: 3,
+    },
+    {
+      key: 'artists',
+      label: 'Artistas',
+      layout: 'texto-centrado',
+      titleEs: 'Artistas',
+      titleEn: 'Artists',
+      subtitleEs: 'Confían en MarzTone',
+      subtitleEn: 'They trust MarzTone',
+      displayOrder: 4,
+    },
+    {
       key: 'contact',
+      label: 'Contacto',
+      layout: 'texto-centrado',
       titleEs: 'Contacto',
       titleEn: 'Contact',
       subtitleEs: 'Hablemos de tu próximo instrumento',
       subtitleEn: "Let's talk about your next instrument",
       contentEs: 'Escribinos y te asesoramos sin compromiso.',
       contentEn: 'Get in touch and we will advise you with no obligation.',
-      displayOrder: 3,
+      displayOrder: 5,
     },
   ];
   for (const s of sections) {

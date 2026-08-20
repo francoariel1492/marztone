@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { CheckCircle2 } from 'lucide-react';
+import { CheckCircle2, ChevronDown, ChevronUp } from 'lucide-react';
 import { adminApi } from '@/api/admin';
 import { LoadingSpinner, ErrorState } from '@/components/common/States';
-import type { PageSection } from '@/types';
+import { SECTION_LAYOUT_OPTIONS } from '@/utils/sectionLayout';
+import type { PageSection, SectionLayout } from '@/types';
 
 export function SectionsPage() {
   const queryClient = useQueryClient();
@@ -12,15 +13,35 @@ export function SectionsPage() {
     queryFn: adminApi.getSections,
   });
 
+  const reorder = useMutation({
+    mutationFn: async ({ a, b }: { a: PageSection; b: PageSection }) => {
+      await Promise.all([
+        adminApi.updateSection(a.id, { displayOrder: b.displayOrder }),
+        adminApi.updateSection(b.id, { displayOrder: a.displayOrder }),
+      ]);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['admin', 'sections'] });
+      queryClient.invalidateQueries({ queryKey: ['sections'] });
+    },
+  });
+
   if (isLoading) return <LoadingSpinner />;
   if (isError || !data) return <ErrorState />;
 
+  const sorted = [...data].sort((x, y) => x.displayOrder - y.displayOrder);
+
   return (
     <div className="space-y-6">
-      {data.map((section) => (
+      {sorted.map((section, index) => (
         <SectionEditor
           key={section.id}
           section={section}
+          isFirst={index === 0}
+          isLast={index === sorted.length - 1}
+          reordering={reorder.isPending}
+          onMoveUp={() => reorder.mutate({ a: section, b: sorted[index - 1] })}
+          onMoveDown={() => reorder.mutate({ a: section, b: sorted[index + 1] })}
           onSaved={() => queryClient.invalidateQueries({ queryKey: ['sections'] })}
         />
       ))}
@@ -28,7 +49,25 @@ export function SectionsPage() {
   );
 }
 
-function SectionEditor({ section, onSaved }: { section: PageSection; onSaved: () => void }) {
+interface SectionEditorProps {
+  section: PageSection;
+  isFirst: boolean;
+  isLast: boolean;
+  reordering: boolean;
+  onMoveUp: () => void;
+  onMoveDown: () => void;
+  onSaved: () => void;
+}
+
+function SectionEditor({
+  section,
+  isFirst,
+  isLast,
+  reordering,
+  onMoveUp,
+  onMoveDown,
+  onSaved,
+}: SectionEditorProps) {
   const queryClient = useQueryClient();
   const [lang, setLang] = useState<'es' | 'en'>('es');
   const [form, setForm] = useState<PageSection>(section);
@@ -58,6 +97,8 @@ function SectionEditor({ section, onSaved }: { section: PageSection; onSaved: ()
         e.preventDefault();
         // Enviar solo los campos que acepta el DTO del backend (whitelist).
         const payload: Partial<PageSection> = {
+          label: form.label,
+          layout: form.layout,
           titleEs: form.titleEs,
           titleEn: form.titleEn,
           subtitleEs: form.subtitleEs,
@@ -72,23 +113,72 @@ function SectionEditor({ section, onSaved }: { section: PageSection; onSaved: ()
       }}
       className="card p-6"
     >
-      <div className="mb-4 flex items-center justify-between">
+      <div className="mb-4 flex items-center justify-between gap-3">
         <h3 className="font-semibold text-wood-900 dark:text-cream-100">
-          {section.key} <span className="text-xs text-wood-500">#{section.displayOrder}</span>
+          {form.label || section.key}{' '}
+          <span className="text-xs text-wood-500">({section.key})</span>
         </h3>
-        <div className="flex rounded-lg border border-wood-500/25 p-0.5 text-sm">
-          {(['es', 'en'] as const).map((l) => (
+        <div className="flex items-center gap-2">
+          <div className="flex flex-col">
             <button
-              key={l}
               type="button"
-              onClick={() => setLang(l)}
-              className={`rounded-md px-3 py-1 ${
-                lang === l ? 'bg-wood-800 text-cream-100 dark:bg-copper-500 dark:text-charcoal-950' : ''
-              }`}
+              onClick={onMoveUp}
+              disabled={isFirst || reordering}
+              aria-label="Subir sección"
+              className="rounded p-1 text-wood-600 hover:bg-wood-500/10 disabled:opacity-30 dark:text-cream-200"
             >
-              {l.toUpperCase()}
+              <ChevronUp size={16} />
             </button>
-          ))}
+            <button
+              type="button"
+              onClick={onMoveDown}
+              disabled={isLast || reordering}
+              aria-label="Bajar sección"
+              className="rounded p-1 text-wood-600 hover:bg-wood-500/10 disabled:opacity-30 dark:text-cream-200"
+            >
+              <ChevronDown size={16} />
+            </button>
+          </div>
+          <div className="flex rounded-lg border border-wood-500/25 p-0.5 text-sm">
+            {(['es', 'en'] as const).map((l) => (
+              <button
+                key={l}
+                type="button"
+                onClick={() => setLang(l)}
+                className={`rounded-md px-3 py-1 ${
+                  lang === l ? 'bg-wood-800 text-cream-100 dark:bg-copper-500 dark:text-charcoal-950' : ''
+                }`}
+              >
+                {l.toUpperCase()}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="mb-4 grid gap-3 sm:grid-cols-2">
+        <div>
+          <label className="label">Nombre de la sección</label>
+          <input
+            className="input"
+            value={form.label}
+            onChange={(e) => set('label', e.target.value)}
+            placeholder={section.key}
+          />
+        </div>
+        <div>
+          <label className="label">Diseño (layout)</label>
+          <select
+            className="input"
+            value={form.layout}
+            onChange={(e) => set('layout', e.target.value as SectionLayout)}
+          >
+            {SECTION_LAYOUT_OPTIONS.map((opt) => (
+              <option key={opt.value} value={opt.value}>
+                {opt.label}
+              </option>
+            ))}
+          </select>
         </div>
       </div>
 

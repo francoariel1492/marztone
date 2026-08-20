@@ -2,41 +2,74 @@ import { motion } from 'framer-motion';
 import type { PageSection } from '@/types';
 import { useLocalizedContent } from '@/hooks/useLocalizedContent';
 import { SectionTitle } from '@/components/common/SectionTitle';
+import { SectionShell } from '@/components/common/SectionShell';
 
 export function AboutSection({ section }: { section?: PageSection }) {
   const { pick } = useLocalizedContent();
   if (!section) return null;
 
   return (
-    <section id="about" className="section-pad">
-      <div className="grid items-center gap-12 lg:grid-cols-2">
-        {section.imageUrl && (
+    <SectionShell id="about" section={section}>
+      {({ onDark, center, reverse, stacked, hideImage }) => {
+        const showImage = Boolean(section.imageUrl) && !hideImage;
+
+        const imageBlock = showImage ? (
           <motion.div
-            initial={{ opacity: 0, x: -24 }}
+            initial={{ opacity: 0, x: reverse ? 24 : -24 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: '-80px' }}
             transition={{ duration: 0.5 }}
             className="overflow-hidden rounded-2xl shadow-soft"
           >
             <img
-              src={section.imageUrl}
+              src={section.imageUrl as string}
               alt={pick(section, 'subtitle') as string}
-              className="aspect-[4/5] w-full object-cover"
+              className={`w-full object-cover ${stacked ? 'aspect-video' : 'aspect-[4/5]'}`}
               loading="lazy"
             />
           </motion.div>
-        )}
-        <div>
-          <SectionTitle
-            eyebrow={pick(section, 'subtitle') as string}
-            title={pick(section, 'title') as string}
-            center={false}
-          />
-          <p className="whitespace-pre-line text-lg leading-relaxed text-wood-700 dark:text-cream-200/80">
-            {pick(section, 'content') as string}
-          </p>
-        </div>
-      </div>
-    </section>
+        ) : null;
+
+        const textBlock = (
+          <div>
+            <SectionTitle
+              eyebrow={pick(section, 'subtitle') as string}
+              title={pick(section, 'title') as string}
+              center={center}
+              onDark={onDark}
+            />
+            <p
+              className={`whitespace-pre-line text-lg leading-relaxed ${
+                center ? 'text-center' : ''
+              } ${onDark ? 'text-cream-100/90' : 'text-wood-700 dark:text-cream-200/80'}`}
+            >
+              {pick(section, 'content') as string}
+            </p>
+          </div>
+        );
+
+        if (stacked) {
+          return (
+            <div className="mx-auto max-w-3xl space-y-8">
+              {imageBlock}
+              {textBlock}
+            </div>
+          );
+        }
+
+        if (!imageBlock) {
+          return <div className={center ? 'mx-auto max-w-3xl' : ''}>{textBlock}</div>;
+        }
+
+        const cols = reverse ? [imageBlock, textBlock] : [textBlock, imageBlock];
+        return (
+          <div className="grid items-center gap-12 lg:grid-cols-2">
+            {cols.map((block, i) => (
+              <div key={i}>{block}</div>
+            ))}
+          </div>
+        );
+      }}
+    </SectionShell>
   );
 }

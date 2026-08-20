@@ -32,9 +32,19 @@ export interface SiteSettings {
   colorTheme: string;
 }
 
+export type SectionLayout =
+  | 'imagen-derecha'
+  | 'imagen-izquierda'
+  | 'texto-centrado'
+  | 'imagen-fondo'
+  | 'apilado'
+  | 'banda-color';
+
 export interface PageSection {
   id: string;
   key: string;
+  label: string;
+  layout: SectionLayout;
   titleEs: string;
   titleEn: string;
   subtitleEs: string | null;

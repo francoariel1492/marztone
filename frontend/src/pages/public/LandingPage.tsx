@@ -1,20 +1,34 @@
 import { useSettings, useSections } from '@/hooks/usePublicContent';
 import { useEffect } from 'react';
+import type { ComponentType } from 'react';
 import { useActiveSection } from '@/hooks/useActiveSection';
 import { useSeo } from '@/hooks/useSeo';
 import { applyAppearance } from '@/hooks/useAppearance';
-import { findSection } from '@/utils/sections';
 import { useLocalizedContent } from '@/hooks/useLocalizedContent';
 import { whatsappFromSettings } from '@/utils/whatsapp';
+import type { PageSection, SiteSettings } from '@/types';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { WhatsAppButton } from '@/components/common/WhatsAppButton';
 import { BackToTopButton } from '@/components/common/BackToTopButton';
 import { HeroSection } from '@/sections/HeroSection';
+import { AboutSection } from '@/sections/AboutSection';
 import { WorkshopSection } from '@/sections/WorkshopSection';
 import { InstrumentsSection } from '@/sections/InstrumentsSection';
 import { ArtistsSection } from '@/sections/ArtistsSection';
 import { ContactSection } from '@/sections/ContactSection';
+
+type SectionProps = { section: PageSection; settings?: SiteSettings };
+
+// Mapa key → componente. El orden y la visibilidad vienen de la base de datos.
+const SECTION_COMPONENTS: Record<string, ComponentType<SectionProps>> = {
+  hero: HeroSection,
+  about: AboutSection,
+  workshop: WorkshopSection,
+  instruments: InstrumentsSection,
+  artists: ArtistsSection,
+  contact: ContactSection,
+};
 
 export function LandingPage() {
   const { data: settings } = useSettings();
@@ -31,15 +45,20 @@ export function LandingPage() {
 
   const waUrl = settings ? whatsappFromSettings(settings, isEn) : '#';
 
+  const ordered = [...(sections ?? [])]
+    .filter((s) => s.isVisible)
+    .sort((a, b) => a.displayOrder - b.displayOrder);
+
   return (
     <div className="min-h-screen bg-cream-100 dark:bg-charcoal-950">
       <Header settings={settings} activeSection={activeSection} />
       <main>
-        <HeroSection section={findSection(sections, 'hero')} settings={settings} />
-        <WorkshopSection section={findSection(sections, 'workshop')} />
-        <InstrumentsSection settings={settings} />
-        <ArtistsSection />
-        <ContactSection section={findSection(sections, 'contact')} settings={settings} />
+        {ordered.map((section) => {
+          const Component = SECTION_COMPONENTS[section.key];
+          return Component ? (
+            <Component key={section.id} section={section} settings={settings} />
+          ) : null;
+        })}
       </main>
       <Footer settings={settings} />
       {settings && <WhatsAppButton url={waUrl} label="WhatsApp" variant="floating" />}
