@@ -58,7 +58,7 @@ export function Header({ settings, activeSection }: HeaderProps) {
       )}
       <nav className="relative mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <button onClick={() => handleNav('hero')} aria-label="MarzTone — Inicio">
-          <Wordmark logoUrl={settings?.logoUrl} size="sm" onDark={!scrolled} />
+          <Wordmark logoUrl={settings?.logoUrl} size="md" onDark={!scrolled} />
         </button>
 
         <ul className="hidden items-center gap-1 lg:flex">

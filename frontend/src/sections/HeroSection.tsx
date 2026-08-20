@@ -38,17 +38,24 @@ export function HeroSection({ section, settings }: HeroSectionProps) {
           transition={{ duration: 0.7 }}
           className="max-w-2xl"
         >
-          <h1 className="font-display text-6xl font-bold leading-none text-cream-50 sm:text-8xl">
-            Marz<span className="text-copper-400">Tone</span>
-          </h1>
-          <p className="mt-2 font-display text-lg italic text-copper-300/90 sm:text-xl">
+          <h1 className="sr-only">MarzTone by Manuel Robles Urquiza</h1>
+          <img
+            src="/logo-dark.png"
+            alt="MarzTone"
+            className="h-24 w-auto sm:h-40"
+            loading="eager"
+          />
+          <p className="mt-3 font-display text-lg italic text-copper-300 sm:text-xl">
             by Manuel Robles Urquiza
           </p>
           <p className="mt-6 text-xl font-medium text-cream-100 sm:text-2xl">{slogan}</p>
           <p className="mt-4 max-w-xl text-cream-100/80">{description}</p>
 
           <div className="mt-8 flex flex-wrap gap-4">
-            <button onClick={() => scrollToSection('instruments')} className="btn-primary">
+            <button
+              onClick={() => scrollToSection('instruments')}
+              className="btn bg-copper-500 text-charcoal-950 shadow-warm transition-colors hover:bg-copper-400"
+            >
               {t('hero.ctaInstruments')}
             </button>
             <WhatsAppButton url={waUrl} label={t('hero.ctaWhatsapp')} />

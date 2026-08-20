@@ -9,7 +9,7 @@ interface WordmarkProps {
 
 const sizeMap = {
   sm: { img: 'h-8', sign: 'text-[10px]' },
-  md: { img: 'h-11', sign: 'text-xs' },
+  md: { img: 'h-12', sign: 'text-[11px]' },
   lg: { img: 'h-20', sign: 'text-base sm:text-lg' },
 };
 
