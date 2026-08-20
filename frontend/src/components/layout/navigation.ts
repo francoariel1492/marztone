@@ -10,7 +10,7 @@ export const NAV_ITEMS: NavItem[] = [
   { id: 'contact', labelKey: 'nav.contact' },
 ];
 
-export const HEADER_OFFSET = 80;
+export const HEADER_OFFSET = 96;
 
 export function scrollToSection(id: string): void {
   const el = document.getElementById(id);
