@@ -116,7 +116,6 @@ export function AppearanceSettings() {
         <p className="font-display text-3xl font-bold text-wood-900 dark:text-cream-100">
           Marz<span className="text-copper-500">Tone</span>
         </p>
-        <p className="font-display italic text-copper-500">by Manuel Robles Urquiza</p>
         <p className="mt-2 font-body text-sm text-wood-600 dark:text-cream-200/70">
           Instrumentos con identidad propia. Así se ven los textos con esta combinación.
         </p>

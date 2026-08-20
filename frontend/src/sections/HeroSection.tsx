@@ -42,9 +42,6 @@ export function HeroSection({ section }: HeroSectionProps) {
             className="h-[7.5rem] w-auto sm:h-[12.5rem]"
             loading="eager"
           />
-          <p className="mt-3 font-display text-lg italic text-copper-400 sm:text-xl">
-            by Manuel Robles Urquiza
-          </p>
           <p className="mt-6 text-xl font-medium text-cream-100 sm:text-2xl">{slogan}</p>
           <p className="mt-4 max-w-xl text-cream-100/80">{description}</p>
 

@@ -72,7 +72,7 @@ export function Footer({ settings }: { settings?: SiteSettings }) {
       <div className="border-t border-wood-500/15 dark:border-copper-400/15">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-2 px-4 py-6 text-xs text-wood-500 dark:text-cream-200/50 sm:flex-row sm:px-6 lg:px-8">
           <p>
-            © {year} MarzTone · by Manuel Robles Urquiza. {t('footer.rights')}
+            © {year} MarzTone. {t('footer.rights')}
           </p>
           <p className="italic">{t('common.handmade')}</p>
         </div>

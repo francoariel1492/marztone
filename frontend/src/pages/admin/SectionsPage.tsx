@@ -56,7 +56,19 @@ function SectionEditor({ section, onSaved }: { section: PageSection; onSaved: ()
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        mutation.mutate(form);
+        // Enviar solo los campos que acepta el DTO del backend (whitelist).
+        const payload: Partial<PageSection> = {
+          titleEs: form.titleEs,
+          titleEn: form.titleEn,
+          subtitleEs: form.subtitleEs,
+          subtitleEn: form.subtitleEn,
+          contentEs: form.contentEs,
+          contentEn: form.contentEn,
+          imageUrl: form.imageUrl,
+          isVisible: form.isVisible,
+          displayOrder: form.displayOrder,
+        };
+        mutation.mutate(payload);
       }}
       className="card p-6"
     >
