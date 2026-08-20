@@ -92,7 +92,7 @@ async function main() {
         whatsappNumber: '5491167999713',
         whatsappMessageEs: 'Hola, vi la web de MarzTone y me gustaría hacer una consulta.',
         whatsappMessageEn: 'Hi, I saw the MarzTone website and I would like to make an inquiry.',
-        instagramUrl: 'https://instagram.com/', // REEMPLAZAR
+        instagramUrl: 'https://www.instagram.com/marztoneguitars/',
         youtubeUrl: 'https://youtube.com/', // REEMPLAZAR
         spotifyUrl: null, // REEMPLAZAR (opcional)
         addressEs: 'Calle del Taller 1, Ciudad, España', // REEMPLAZAR
