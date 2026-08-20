@@ -16,7 +16,6 @@ import { WorkshopSection } from '@/sections/WorkshopSection';
 import { InstrumentsSection } from '@/sections/InstrumentsSection';
 import { ArtistsSection } from '@/sections/ArtistsSection';
 import { ServicesSection } from '@/sections/ServicesSection';
-import { ProcessSection } from '@/sections/ProcessSection';
 import { TestimonialsSection } from '@/sections/TestimonialsSection';
 import { ContactSection } from '@/sections/ContactSection';
 
@@ -45,7 +44,6 @@ export function LandingPage() {
         <InstrumentsSection settings={settings} />
         <ArtistsSection />
         <ServicesSection settings={settings} />
-        <ProcessSection />
         <TestimonialsSection />
         <ContactSection section={findSection(sections, 'contact')} settings={settings} />
       </main>
