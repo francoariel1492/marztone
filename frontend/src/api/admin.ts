@@ -30,8 +30,11 @@ export const adminApi = {
 
   // Sections
   getSections: () => api.get<PageSection[]>('/admin/sections').then((r) => r.data),
+  createSection: (data: Partial<PageSection>) =>
+    api.post<PageSection>('/admin/sections', data).then((r) => r.data),
   updateSection: (id: string, data: Partial<PageSection>) =>
     api.patch<PageSection>(`/admin/sections/${id}`, data).then((r) => r.data),
+  deleteSection: (id: string) => api.delete(`/admin/sections/${id}`).then((r) => r.data),
 
   // Workshop
   getWorkshop: () => api.get<WorkshopImage[]>('/admin/workshop').then((r) => r.data),

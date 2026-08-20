@@ -17,10 +17,12 @@ import { WorkshopSection } from '@/sections/WorkshopSection';
 import { InstrumentsSection } from '@/sections/InstrumentsSection';
 import { ArtistsSection } from '@/sections/ArtistsSection';
 import { ContactSection } from '@/sections/ContactSection';
+import { CustomSection } from '@/sections/CustomSection';
 
 type SectionProps = { section: PageSection; settings?: SiteSettings };
 
 // Mapa key → componente. El orden y la visibilidad vienen de la base de datos.
+// Las secciones sin componente propio (creadas por el admin) usan CustomSection.
 const SECTION_COMPONENTS: Record<string, ComponentType<SectionProps>> = {
   hero: HeroSection,
   about: AboutSection,
@@ -54,10 +56,8 @@ export function LandingPage() {
       <Header settings={settings} activeSection={activeSection} />
       <main>
         {ordered.map((section) => {
-          const Component = SECTION_COMPONENTS[section.key];
-          return Component ? (
-            <Component key={section.id} section={section} settings={settings} />
-          ) : null;
+          const Component = SECTION_COMPONENTS[section.key] ?? CustomSection;
+          return <Component key={section.id} section={section} settings={settings} />;
         })}
       </main>
       <Footer settings={settings} />

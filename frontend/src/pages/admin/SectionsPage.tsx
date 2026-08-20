@@ -1,17 +1,29 @@
 import { useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { CheckCircle2, ChevronDown, ChevronUp } from 'lucide-react';
+import { CheckCircle2, ChevronDown, ChevronUp, Plus, Trash2 } from 'lucide-react';
 import { adminApi } from '@/api/admin';
 import { LoadingSpinner, ErrorState } from '@/components/common/States';
+import { ConfirmDialog } from '@/components/admin/ConfirmDialog';
 import { SECTION_LAYOUT_OPTIONS } from '@/utils/sectionLayout';
-import type { PageSection, SectionLayout } from '@/types';
+import { LayoutPreview } from '@/components/admin/LayoutPreview';
+import type { PageSection } from '@/types';
+
+// Secciones con comportamiento propio (galerías, formularios, colecciones).
+// Las creadas por el admin son "personalizadas" y se renderizan como bloque de contenido.
+const SYSTEM_KEYS = ['hero', 'about', 'workshop', 'instruments', 'artists', 'contact'];
 
 export function SectionsPage() {
   const queryClient = useQueryClient();
+  const [toDelete, setToDelete] = useState<PageSection | null>(null);
   const { data, isLoading, isError } = useQuery({
     queryKey: ['admin', 'sections'],
     queryFn: adminApi.getSections,
   });
+
+  const invalidate = () => {
+    queryClient.invalidateQueries({ queryKey: ['admin', 'sections'] });
+    queryClient.invalidateQueries({ queryKey: ['sections'] });
+  };
 
   const reorder = useMutation({
     mutationFn: async ({ a, b }: { a: PageSection; b: PageSection }) => {
@@ -20,9 +32,26 @@ export function SectionsPage() {
         adminApi.updateSection(b.id, { displayOrder: a.displayOrder }),
       ]);
     },
+    onSuccess: invalidate,
+  });
+
+  const create = useMutation({
+    mutationFn: () =>
+      adminApi.createSection({
+        label: 'Nueva sección',
+        layout: 'texto-centrado',
+        titleEs: 'Nueva sección',
+        titleEn: 'New section',
+        isVisible: false,
+      }),
+    onSuccess: invalidate,
+  });
+
+  const remove = useMutation({
+    mutationFn: (id: string) => adminApi.deleteSection(id),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['admin', 'sections'] });
-      queryClient.invalidateQueries({ queryKey: ['sections'] });
+      invalidate();
+      setToDelete(null);
     },
   });
 
@@ -33,6 +62,15 @@ export function SectionsPage() {
 
   return (
     <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <p className="text-sm text-wood-600 dark:text-cream-200/60">
+          Editá el contenido, elegí el diseño, reordená o agregá secciones nuevas.
+        </p>
+        <button className="btn-primary" onClick={() => create.mutate()} disabled={create.isPending}>
+          <Plus size={18} /> {create.isPending ? 'Creando…' : 'Nueva sección'}
+        </button>
+      </div>
+
       {sorted.map((section, index) => (
         <SectionEditor
           key={section.id}
@@ -40,11 +78,25 @@ export function SectionsPage() {
           isFirst={index === 0}
           isLast={index === sorted.length - 1}
           reordering={reorder.isPending}
+          isSystem={SYSTEM_KEYS.includes(section.key)}
           onMoveUp={() => reorder.mutate({ a: section, b: sorted[index - 1] })}
           onMoveDown={() => reorder.mutate({ a: section, b: sorted[index + 1] })}
+          onDelete={() => setToDelete(section)}
           onSaved={() => queryClient.invalidateQueries({ queryKey: ['sections'] })}
         />
       ))}
+
+      <ConfirmDialog
+        open={Boolean(toDelete)}
+        title="Eliminar sección"
+        message={
+          toDelete && SYSTEM_KEYS.includes(toDelete.key)
+            ? `"${toDelete.label || toDelete.key}" es una sección del sistema. Si la eliminás dejará de mostrarse su contenido especial (galería, formulario o listado). ¿Continuar?`
+            : `¿Seguro que querés eliminar la sección "${toDelete?.label || toDelete?.key}"? Esta acción no se puede deshacer.`
+        }
+        onConfirm={() => toDelete && remove.mutate(toDelete.id)}
+        onCancel={() => setToDelete(null)}
+      />
     </div>
   );
 }
@@ -54,8 +106,10 @@ interface SectionEditorProps {
   isFirst: boolean;
   isLast: boolean;
   reordering: boolean;
+  isSystem: boolean;
   onMoveUp: () => void;
   onMoveDown: () => void;
+  onDelete: () => void;
   onSaved: () => void;
 }
 
@@ -64,8 +118,10 @@ function SectionEditor({
   isFirst,
   isLast,
   reordering,
+  isSystem,
   onMoveUp,
   onMoveDown,
+  onDelete,
   onSaved,
 }: SectionEditorProps) {
   const queryClient = useQueryClient();
@@ -116,7 +172,14 @@ function SectionEditor({
       <div className="mb-4 flex items-center justify-between gap-3">
         <h3 className="font-semibold text-wood-900 dark:text-cream-100">
           {form.label || section.key}{' '}
-          <span className="text-xs text-wood-500">({section.key})</span>
+          <span className="text-xs text-wood-500">
+            ({section.key})
+            {!isSystem && (
+              <span className="ml-1 rounded bg-copper-500/15 px-1.5 py-0.5 text-[10px] font-medium text-copper-600 dark:text-copper-400">
+                personalizada
+              </span>
+            )}
+          </span>
         </h3>
         <div className="flex items-center gap-2">
           <div className="flex flex-col">
@@ -139,6 +202,14 @@ function SectionEditor({
               <ChevronDown size={16} />
             </button>
           </div>
+          <button
+            type="button"
+            onClick={onDelete}
+            aria-label="Eliminar sección"
+            className="rounded p-2 text-red-600 hover:bg-red-600/10"
+          >
+            <Trash2 size={16} />
+          </button>
           <div className="flex rounded-lg border border-wood-500/25 p-0.5 text-sm">
             {(['es', 'en'] as const).map((l) => (
               <button
@@ -166,19 +237,36 @@ function SectionEditor({
             placeholder={section.key}
           />
         </div>
-        <div>
-          <label className="label">Diseño (layout)</label>
-          <select
-            className="input"
-            value={form.layout}
-            onChange={(e) => set('layout', e.target.value as SectionLayout)}
-          >
-            {SECTION_LAYOUT_OPTIONS.map((opt) => (
-              <option key={opt.value} value={opt.value}>
-                {opt.label}
-              </option>
-            ))}
-          </select>
+      </div>
+
+      <div className="mb-5">
+        <label className="label mb-2 block">Diseño (layout)</label>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          {SECTION_LAYOUT_OPTIONS.map((opt) => {
+            const active = form.layout === opt.value;
+            return (
+              <button
+                key={opt.value}
+                type="button"
+                onClick={() => set('layout', opt.value)}
+                aria-pressed={active}
+                className={`flex flex-col gap-2 rounded-xl border p-2 text-left transition-colors ${
+                  active
+                    ? 'border-copper-500 ring-2 ring-copper-500/40'
+                    : 'border-wood-500/20 hover:border-copper-400/60'
+                }`}
+              >
+                <LayoutPreview layout={opt.value} />
+                <span
+                  className={`text-xs font-medium ${
+                    active ? 'text-copper-600 dark:text-copper-400' : 'text-wood-600 dark:text-cream-200/70'
+                  }`}
+                >
+                  {opt.label}
+                </span>
+              </button>
+            );
+          })}
         </div>
       </div>
 
