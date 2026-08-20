@@ -46,12 +46,19 @@ export function Header({ settings, activeSection }: HeaderProps) {
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
         scrolled
           ? 'bg-cream-100/95 backdrop-blur-md shadow-soft dark:bg-charcoal-950/95'
-          : 'bg-cream-100/80 backdrop-blur-sm dark:bg-charcoal-950/80'
+          : 'bg-transparent'
       }`}
     >
-      <nav className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+      {/* Degradado sutil arriba para que el texto claro se lea sobre la foto del hero */}
+      {!scrolled && (
+        <div
+          className="pointer-events-none absolute inset-0 bg-gradient-to-b from-charcoal-950/55 to-transparent"
+          aria-hidden
+        />
+      )}
+      <nav className="relative mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <button onClick={() => handleNav('hero')} aria-label="MarzTone — Inicio">
-          <Wordmark logoUrl={settings?.logoUrl} size="sm" />
+          <Wordmark logoUrl={settings?.logoUrl} size="sm" onDark={!scrolled} />
         </button>
 
         <ul className="hidden items-center gap-1 lg:flex">
@@ -62,8 +69,12 @@ export function Header({ settings, activeSection }: HeaderProps) {
                 aria-current={activeSection === item.id ? 'true' : undefined}
                 className={`rounded-full px-3 py-2 text-sm font-medium transition-colors ${
                   activeSection === item.id
-                    ? 'text-copper-500'
-                    : 'text-wood-700 hover:text-wood-900 dark:text-cream-200 dark:hover:text-cream-50'
+                    ? scrolled
+                      ? 'text-copper-500'
+                      : 'text-copper-300'
+                    : scrolled
+                      ? 'text-wood-700 hover:text-wood-900 dark:text-cream-200 dark:hover:text-cream-50'
+                      : 'text-cream-100/90 hover:text-white'
                 }`}
               >
                 {t(item.labelKey)}
@@ -73,8 +84,8 @@ export function Header({ settings, activeSection }: HeaderProps) {
         </ul>
 
         <div className="hidden items-center gap-3 lg:flex">
-          <LanguageSelector />
-          <ThemeSelector />
+          <LanguageSelector onDark={!scrolled} />
+          <ThemeSelector onDark={!scrolled} />
           <WhatsAppButton url={waUrl} label="WhatsApp" />
         </div>
 
@@ -84,7 +95,9 @@ export function Header({ settings, activeSection }: HeaderProps) {
           aria-expanded={open}
           aria-controls="mobile-menu"
           aria-label={open ? t('common.close') : 'Menú'}
-          className="rounded-lg p-2 text-wood-800 dark:text-cream-100 lg:hidden"
+          className={`rounded-lg p-2 lg:hidden ${
+            scrolled || open ? 'text-wood-800 dark:text-cream-100' : 'text-cream-50'
+          }`}
         >
           {open ? <X size={26} /> : <Menu size={26} />}
         </button>
