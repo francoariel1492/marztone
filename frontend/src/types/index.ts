@@ -27,6 +27,9 @@ export interface SiteSettings {
   seoDescriptionEs: string;
   seoDescriptionEn: string;
   ogImageUrl: string | null;
+  fontHeading: string;
+  fontBody: string;
+  colorTheme: string;
 }
 
 export interface PageSection {

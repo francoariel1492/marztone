@@ -107,6 +107,9 @@ async function main() {
         seoDescriptionEn:
           "MarzTone is Manuel Robles Urquiza's luthier workshop, specializing in custom instruments, repairs, restorations and professional setups.",
         ogImageUrl: PHOTOS.og,
+        fontHeading: 'Cormorant Garamond',
+        fontBody: 'Inter',
+        colorTheme: 'cobre',
       },
     });
     console.log('✔ SiteSettings');

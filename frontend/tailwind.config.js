@@ -22,13 +22,13 @@ export default {
           950: '#1a110c',
         },
         copper: {
-          400: '#d99a5b',
-          500: '#c17f3f',
-          600: '#a8672a',
+          400: 'rgb(var(--accent-400) / <alpha-value>)',
+          500: 'rgb(var(--accent-500) / <alpha-value>)',
+          600: 'rgb(var(--accent-600) / <alpha-value>)',
         },
         gold: {
-          400: '#d4af6a',
-          500: '#c19a4e',
+          400: 'rgb(var(--accent-400) / <alpha-value>)',
+          500: 'rgb(var(--accent-500) / <alpha-value>)',
         },
         charcoal: {
           800: '#241a14',
@@ -37,8 +37,8 @@ export default {
         },
       },
       fontFamily: {
-        display: ['"Cormorant Garamond"', 'Georgia', 'serif'],
-        body: ['Inter', 'system-ui', 'sans-serif'],
+        display: ['var(--font-display)', '"Cormorant Garamond"', 'Georgia', 'serif'],
+        body: ['var(--font-body)', 'Inter', 'system-ui', 'sans-serif'],
       },
       boxShadow: {
         soft: '0 10px 40px -12px rgba(43, 29, 22, 0.25)',

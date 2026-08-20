@@ -9,7 +9,7 @@ import { StorageService } from '../storage/storage.service';
 import { PaginatedResult, paginate } from '../common/dto/pagination.dto';
 import { MediaFile } from '@prisma/client';
 
-const ALLOWED_MIME = ['image/jpeg', 'image/png', 'image/webp', 'image/avif'];
+const ALLOWED_MIME = ['image/jpeg', 'image/png', 'image/webp', 'image/avif', 'image/heic', 'image/heif'];
 
 @Injectable()
 export class MediaService {

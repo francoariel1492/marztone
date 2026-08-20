@@ -26,4 +26,7 @@ export class UpdateSettingsDto {
   @ApiPropertyOptional() @IsOptional() @IsString() seoDescriptionEs?: string;
   @ApiPropertyOptional() @IsOptional() @IsString() seoDescriptionEn?: string;
   @ApiPropertyOptional() @IsOptional() @IsString() ogImageUrl?: string;
+  @ApiPropertyOptional() @IsOptional() @IsString() fontHeading?: string;
+  @ApiPropertyOptional() @IsOptional() @IsString() fontBody?: string;
+  @ApiPropertyOptional() @IsOptional() @IsString() colorTheme?: string;
 }

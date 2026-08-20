@@ -5,6 +5,13 @@
 @layer base {
   :root {
     color-scheme: light;
+    /* Tipografías (editables desde el admin) */
+    --font-display: 'Cormorant Garamond';
+    --font-body: 'Inter';
+    /* Acento del tema de color (por defecto: cobre). RGB separado por espacios. */
+    --accent-400: 217 154 91;
+    --accent-500: 193 127 63;
+    --accent-600: 168 103 42;
   }
   html.dark {
     color-scheme: dark;

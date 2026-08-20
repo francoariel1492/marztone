@@ -1,6 +1,8 @@
 import { useSettings, useSections } from '@/hooks/usePublicContent';
+import { useEffect } from 'react';
 import { useActiveSection } from '@/hooks/useActiveSection';
 import { useSeo } from '@/hooks/useSeo';
+import { applyAppearance } from '@/hooks/useAppearance';
 import { findSection } from '@/utils/sections';
 import { useLocalizedContent } from '@/hooks/useLocalizedContent';
 import { whatsappFromSettings } from '@/utils/whatsapp';
@@ -24,6 +26,12 @@ export function LandingPage() {
   const activeSection = useActiveSection();
   const { isEn } = useLocalizedContent();
   useSeo(settings);
+
+  useEffect(() => {
+    if (settings) {
+      applyAppearance(settings);
+    }
+  }, [settings]);
 
   const waUrl = settings ? whatsappFromSettings(settings, isEn) : '#';
 

@@ -1,4 +1,5 @@
 import { SettingsForm, type SettingsField } from '@/components/admin/SettingsForm';
+import { AppearanceSettings } from '@/components/admin/AppearanceSettings';
 
 const BRANDING_FIELDS: SettingsField[] = [
   { key: 'siteName', label: 'Nombre del sitio' },
@@ -13,5 +14,10 @@ const BRANDING_FIELDS: SettingsField[] = [
 ];
 
 export function GeneralPage() {
-  return <SettingsForm title="Marca y WhatsApp" fields={BRANDING_FIELDS} />;
+  return (
+    <div className="space-y-8">
+      <AppearanceSettings />
+      <SettingsForm title="Marca y WhatsApp" fields={BRANDING_FIELDS} />
+    </div>
+  );
 }
